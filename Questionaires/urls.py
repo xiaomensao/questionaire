@@ -1,7 +1,10 @@
 from django.urls import path
-
-from . import views
+from django.conf.urls import include, url 
+from Questionaires import views
+from rest_framework import routers 
+router = routers.DefaultRouter()
+router.register('questionaire', views.questionaireViewset, 'questionaire')
 
 urlpatterns = [
-    path('', views.index, name='index'),
+    url(r'^', include(router.urls)),
 ]
