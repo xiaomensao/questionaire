@@ -4,6 +4,8 @@ from Questionaires import views
 from rest_framework import routers 
 router = routers.DefaultRouter()
 router.register('questionaire', views.questionaireViewset, 'questionaire')
+router.register('questionairestatus', views.questionaireStatusViewSet, 'questionairestatus')
+router.register('questiontype', views.questionTypeViewSet, 'questiontype')
 
 urlpatterns = [
     url(r'^', include(router.urls)),

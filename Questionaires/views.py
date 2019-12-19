@@ -8,9 +8,9 @@ from django.http import HttpResponse
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 
-from .serializers import QuestionaireSerializer
+from .serializers import QuestionaireSerializer, QuestionaireStatusSerializer, QuestionTypeSerializer
 
-from .models import Questionaire
+from .models import Questionaire, QuestionaireStatus, QuestionType, Question
 
 # Create your views here.
 
@@ -24,3 +24,11 @@ class questionaireViewset(viewsets.ModelViewSet):
         queryset = self.queryset
         query_set=queryset.filter(user=self.request.user)
         return query_set
+
+class questionaireStatusViewSet(viewsets.ReadOnlyModelViewSet):
+    queryset = QuestionaireStatus.objects.all()
+    serializer_class = QuestionaireStatusSerializer
+
+class questionTypeViewSet(viewsets.ReadOnlyModelViewSet):
+    queryset = QuestionType.objects.all()
+    serializer_class = QuestionTypeSerializer
