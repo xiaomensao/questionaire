@@ -92,7 +92,8 @@ DATABASES = {
         'USER':'root',
         'PASSWORD':'yhm960516',
         'HOST':'127.0.0.1',
-        'PORT': '3306'
+        'PORT': '3306',
+        'TEST_CHARSET': 'utf-8'
     }
 }
 

@@ -1,7 +1,7 @@
 from django.contrib.auth import authenticate
 from django.views.decorators.csrf import csrf_exempt
 from rest_framework.authtoken.models import Token
-from rest_framework.decorators import api_view, permission_classes
+from rest_framework.decorators import api_view, permission_classes, authentication_classes
 from rest_framework.permissions import AllowAny
 from rest_framework.status import (
     HTTP_400_BAD_REQUEST,
@@ -15,7 +15,8 @@ import json
 
 @csrf_exempt
 @api_view(["POST"])
-@permission_classes((AllowAny,))
+@permission_classes([AllowAny,])
+@authentication_classes([])
 def login(request):
     received_json_data=json.loads(request.body)
     username = received_json_data["username"]

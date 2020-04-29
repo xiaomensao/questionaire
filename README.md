@@ -13,3 +13,6 @@ install mysqlclient
 Everytime you make change to models(database table),run following commands:
 `python manage.py makemigrations`
 `python manage.py migrate`
+
+create database and make mysql work with utf-8
+`CREATE SCHEMA `questionaire` DEFAULT CHARACTER SET utf8 ;`
