@@ -16,3 +16,9 @@ Everytime you make change to models(database table),run following commands:
 
 create database and make mysql work with utf-8
 `CREATE SCHEMA `questionaire` DEFAULT CHARACTER SET utf8 ;`
+
+QuestionType:
+1 - 文本
+2 - 单选
+3 - 多选
+4 - 多选标签

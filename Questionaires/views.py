@@ -10,7 +10,7 @@ from rest_framework.response import Response
 
 from .serializers import QuestionaireSerializer, QuestionaireStatusSerializer, QuestionTypeSerializer, QuestionSerializer
 
-from .models import Questionaire, QuestionaireStatus, QuestionType, Question
+from .models import Questionaire, QuestionaireStatus, QuestionType, Question, RadioChoice
 from django.contrib.auth.models import User
 
 from rest_framework.status import (
@@ -49,8 +49,7 @@ class questionViewSet(viewsets.ModelViewSet):
         queryset = self.queryset
         questionaireId = self.request.query_params.get('questionaireId', None)
         if questionaireId:
-            model_q = Questionaire.objects.get(id=questionaireId)
-            queryset=queryset.filter(questionaire=model_q)
+            queryset=queryset.filter(questionaire_id=questionaireId).order_by('order', 'type')
         return queryset
 
 @api_view(["POST"])
@@ -74,11 +73,19 @@ def questionaireSave(request):
         #delete old questions
         oldQues = Question.objects.filter(questionaire=model_q)
         for q in oldQues:
+            oldRadios = RadioChoice.objects.filter(question=q)
+            for r in oldRadios:
+                r.delete()
             q.delete()
         
     #save questions
     for question in received_q['questions']:
         model_type = QuestionType.objects.get(id=question['type'])
-        model_ques = Question(type=model_type, text=question['text'])
+        model_ques = Question(questionaire=model_q, type=model_type, text=question['text'], order=question['order'])
         model_ques.save()
+        
+        if question['radioChoices']:
+            for rc in question['radioChoices']:
+                model_rc = RadioChoice(question=model_ques, text=rc['text'])
+                model_rc.save()
     return Response(retVal, status=HTTP_200_OK)
