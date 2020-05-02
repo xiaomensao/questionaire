@@ -21,4 +21,9 @@ QuestionType:
 1 - 文本
 2 - 单选
 3 - 多选
-4 - 多选标签
+4 - 多选选项
+
+questionaire status:
+1 - 编辑
+2 - 发布
+3 - 关闭

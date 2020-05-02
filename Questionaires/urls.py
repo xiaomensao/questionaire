@@ -11,4 +11,5 @@ router.register('question', views.questionViewSet, 'question')
 urlpatterns = [
     url(r'^', include(router.urls)),
     url(r'questionaireSave/$', views.questionaireSave),
+    url(r'responseSubmit/$', views.responseSubmit),
 ]

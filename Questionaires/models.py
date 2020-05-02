@@ -39,3 +39,16 @@ class RadioChoice(models.Model):
     text = models.CharField(max_length=255, blank=True, default='')
     def __str__(self):
         return str(self.text)
+
+class Response(models.Model):
+    created = models.DateTimeField(default = timezone.now)
+    questionaire = models.ForeignKey(Questionaire, on_delete=models.CASCADE)
+    def __str__(self):
+    	return str(self.created)
+
+class ResponseItem(models.Model):
+    response = models.ForeignKey(Response, on_delete=models.CASCADE)
+    question = models.ForeignKey(Question, on_delete=models.CASCADE)
+    text = models.CharField(max_length=1000, null=True, blank=True)
+    radio = models.ForeignKey(RadioChoice, on_delete=models.CASCADE, null=True, blank=True)
+    checkbox = models.BooleanField(null=True, blank=True)
