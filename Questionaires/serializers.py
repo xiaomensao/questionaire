@@ -1,6 +1,6 @@
 from rest_framework import serializers 
 
-from .models import Questionaire, QuestionaireStatus, QuestionType, Question, RadioChoice
+from .models import Questionaire, QuestionaireStatus, QuestionType, Question, RadioChoice, Response, ResponseItem
 
 class QuestionaireSerializer(serializers.ModelSerializer):
 	statusName = serializers.CharField(read_only=True, source="status.name")
@@ -34,3 +34,21 @@ class QuestionSerializer(serializers.ModelSerializer):
 	class Meta:
 		model = Question
 		fields = ('id', 'text', 'type', 'questionaire', 'order', 'radioChoices')
+
+class ResponseItemSerializer(serializers.ModelSerializer):
+	order = serializers.IntegerField(read_only=True, source="question.order")
+	class Meta:
+		model=ResponseItem
+		fields = ('id', 'question', 'text', 'radio', 'checkbox', 'order')
+
+class ResponseSerializer(serializers.ModelSerializer):
+	items = serializers.SerializerMethodField(read_only=True)
+	
+	def get_items(self, obj):
+		responseItems = ResponseItem.objects.filter(response=obj)
+		serializer = ResponseItemSerializer(instance=responseItems, many=True)
+		return serializer.data
+
+	class Meta:
+		model = Response
+		fields = ('id', 'questionaire', 'created', 'items')

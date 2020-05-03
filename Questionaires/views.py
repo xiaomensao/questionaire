@@ -8,7 +8,7 @@ from django.http import HttpResponse
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 
-from .serializers import QuestionaireSerializer, QuestionaireStatusSerializer, QuestionTypeSerializer, QuestionSerializer
+from .serializers import QuestionaireSerializer, QuestionaireStatusSerializer, QuestionTypeSerializer, QuestionSerializer, ResponseSerializer
 
 from .models import Questionaire, QuestionaireStatus, QuestionType, Question, RadioChoice, Response as Res, ResponseItem
 from django.contrib.auth.models import User
@@ -55,6 +55,16 @@ class questionViewSet(viewsets.ReadOnlyModelViewSet):
         questionaireId = self.request.query_params.get('questionaireId', None)
         if questionaireId:
             queryset=queryset.filter(questionaire_id=questionaireId).order_by('order', 'type')
+        return queryset
+
+class responseViewSet(viewsets.ReadOnlyModelViewSet):
+    queryset = Res.objects.all()
+    serializer_class = ResponseSerializer
+    def get_queryset(self): 
+        queryset = self.queryset
+        questionaireId = self.request.query_params.get('questionaireId', None)
+        if questionaireId:
+            queryset=queryset.filter(questionaire_id=questionaireId).order_by('created')
         return queryset
 
 @api_view(["POST"])

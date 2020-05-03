@@ -7,6 +7,7 @@ router.register('questionaire', views.questionaireViewset, 'questionaire')
 router.register('questionairestatus', views.questionaireStatusViewSet, 'questionairestatus')
 router.register('questiontype', views.questionTypeViewSet, 'questiontype')
 router.register('question', views.questionViewSet, 'question')
+router.register('response', views.responseViewSet, 'response')
 
 urlpatterns = [
     url(r'^', include(router.urls)),
