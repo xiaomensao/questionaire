@@ -15,6 +15,7 @@ class Questionaire(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
     status = models.ForeignKey(QuestionaireStatus, on_delete=models.CASCADE, default=1)
     title = models.CharField(max_length=255, blank=True, default='')
+    description = models.CharField(max_length=255, blank=True, default='')
 
     def __str__(self):
     	return str(self.created)

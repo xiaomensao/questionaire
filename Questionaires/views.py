@@ -27,7 +27,7 @@ def index(request):
     return HttpResponse("Create a questionaire here")
 
 @permission_classes([permissions.IsAuthenticatedOrReadOnly,])
-class questionaireViewset(viewsets.ReadOnlyModelViewSet):
+class questionaireViewset(viewsets.ModelViewSet):
     queryset = Questionaire.objects.all()
     serializer_class = QuestionaireSerializer
     def get_queryset(self): 
@@ -75,7 +75,7 @@ def questionaireSave(request):
     if int(received_q['id']) < 0:
         # create
         # save questionaire
-        model_q = Questionaire(user=request.user, status=model_status, title=received_q['title'])
+        model_q = Questionaire(user=request.user, status=model_status, title=received_q['title'], description=received_q['description'])
         model_q.save()
 
     else:
@@ -84,6 +84,7 @@ def questionaireSave(request):
         model_q.user = request.user
         model_q.status = model_status
         model_q.title = received_q['title']
+        model_q.description = received_q['description']
         model_q.save()
         #delete old questions
         oldQues = Question.objects.filter(questionaire=model_q)

@@ -6,7 +6,7 @@ class QuestionaireSerializer(serializers.ModelSerializer):
 	statusName = serializers.CharField(read_only=True, source="status.name")
 	class Meta:
 		model = Questionaire
-		fields = ('id', 'user', 'status', 'title', 'created', 'statusName')
+		fields = ('id', 'user', 'status', 'title', 'created', 'statusName', 'description')
 
 class QuestionaireStatusSerializer(serializers.ModelSerializer):
 	class Meta:
